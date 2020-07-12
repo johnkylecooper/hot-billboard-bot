@@ -1,9 +1,7 @@
 #!/bin/bash
 
-source ~/opt/anaconda3/etc/profile.d/conda.sh
 source keys.env
-
-conda activate base
+source venv/bin/activate
 
 # Retry up to 10 times
 for _ in {1..10}; do

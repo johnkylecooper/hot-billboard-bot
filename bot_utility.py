@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
+import requests
+
 
 def get_song_info():
     # In[1595]:
@@ -199,29 +201,12 @@ def get_song_info():
     textToSearch = song[H1.strip()]+" by "+song[H2.strip()]
     query = urllib.parse.quote(textToSearch)
     url = "https://www.youtube.com/results?search_query=" + query
-    response = urllib.request.urlopen(url)
-    html = response.read()
-    soup = BeautifulSoup(html, 'html.parser')
-    text = soup.get_text()
-    
-    # In[1613]:
-    
-    
-    uri = 0
-    uri_list = []
-    while uri < len(text):
-        uri = text.find("\"videoId\"", uri)
-        if uri == -1:
-            break
-        uri_list.append(text[uri:uri+22].split(":")[1].strip('\"'))
-        uri += 22
-    seen = set()
-    result = []
-    for item in uri_list:
-        if item not in seen:
-            seen.add(item)
-            result.append(item)
-    lnk = "https://www.youtube.com/watch?v="+result[0]
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    text_idx = response.text.find("\"videoId\"")
+    result = response.text[text_idx:text_idx + 22].split(":")[1].strip('\"')
+
+    lnk = "https://www.youtube.com/watch?v=" + result
     
     H = [H0.strip(), H1.strip(), H2.strip(), H3.strip(), H4.strip(), H5.strip()]
     
