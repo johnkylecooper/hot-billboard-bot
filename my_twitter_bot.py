@@ -39,6 +39,6 @@ def tweet():
     file1 = open("songs.txt","a")
     file1.write(song[H[1]]+'\n')
     file1.close()
-    # api.PostUpdate(status)
+    api.PostUpdate(status)
 
 tweet()
