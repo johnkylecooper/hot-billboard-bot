@@ -7,16 +7,19 @@ Created on Tue Jul  7 17:41:15 2020
 """
 
 import os
-import tweepy
 import time
 from bot_utility import get_song_info
 
 print('this is my twitter bot')
 
+# Collect Keys
 keys = open("keys.txt").read().split()
-auth = tweepy.OAuthHandler(keys[0], keys[1])
-auth.set_access_token(keys[2] , keys[3])
-api = tweepy.API(auth)
+
+import twitter
+api = twitter.Api(consumer_key=keys[0],
+                  consumer_secret=keys[1],
+                  access_token_key=keys[2],
+                  access_token_secret=keys[3])
 
 def tweet():
     song, lnk, year, H = get_song_info()
@@ -36,6 +39,6 @@ def tweet():
     file1 = open("songs.txt","a")
     file1.write(song[H[1]]+'\n')
     file1.close()
-    api.update_status(status)
+    # api.PostUpdate(status)
 
 tweet()
